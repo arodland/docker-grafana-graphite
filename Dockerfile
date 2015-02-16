@@ -46,11 +46,9 @@ RUN     mkdir /src                                                              
 RUN     mkdir /src/grafana                                                                                                              &&\
         git clone https://github.com/grafana/grafana.git /src/grafana                                                                   &&\
         cd /src/grafana                                                                                                                 &&\
-        git checkout v1.7.0
+        git checkout v1.9.1
 
-ADD     ./grafana/correctly-show-urlencoded-metrics.patch /src/grafana/correctly-show-urlencoded-metrics.patch
-RUN     git apply /src/grafana/correctly-show-urlencoded-metrics.patch --directory=/src/grafana                                         &&\
-        cd /src/grafana                                                                                                                 &&\
+RUN     cd /src/grafana                                                                                                                 &&\
         npm install                                                                                                                     &&\
         npm install -g grunt-cli                                                                                                        &&\
         grunt build 
@@ -105,7 +103,8 @@ EXPOSE  8125/udp
 # StatsD Management port
 EXPOSE  8126
 
-
+# Graphite carbon
+EXPOSE 2003
 
 
 # -------- #
